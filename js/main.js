@@ -1,55 +1,98 @@
+// Все переменные нужны. Лишних нет. Удалить что-то я так же не могу
 let enterFirstName;
-let firstName;
 let enterLastName;
-let lastName;
+let userName;
 let enterMail;
+let userEmail;
 let enterDate;
-
-let questionnaireWrap = document.querySelector('.questionnaire');
-
-do {
-    enterFirstName = prompt("Введіть своє повне ім'я:");
-
-    let firstNameLetter = enterFirstName.slice(1);
-    firstName = enterFirstName[0].toUpperCase() + firstNameLetter;
-    firstName.trim();
-} while (enterFirstName.indexOf(' ') !== -1);
+let userDate;
+let questionnaireList = document.createElement('ul');
+questionnaireList.classList.add('questionnaireList');
+document.body.appendChild(questionnaireList);
 
 do {
-    enterLastName = prompt('Введіть своє прізвище:');
+    enterFirstName = prompt('Enter your name').trim();
 
-    let firstSurNameLetter = enterLastName.slice(1);
-    lastName = enterLastName[0].toUpperCase() + firstSurNameLetter;
-    lastName.trim();
-} while (enterLastName.indexOf(' ') !== -1);
-
-do {
-    enterMail = prompt('Введіть свій email:');
-
-    enterMail.toLowerCase();
-    enterMail.trim();
-    if (enterMail.indexOf('@') == [0]) {
-        alert('недійсний email "${enterMail}" (символ @ знайти на першому місці)');
-    } else if (enterMail.indexOf('@') == [enterMail.length] - 1) {
-        alert('недійсний email "${enterMail}" (символ @ знайти на останньому місці)');
-    } else if (enterMail.indexOf('@') == -1) {
-        alert('недійсний email "${enterMail}" (відсутній символ "@")');
-    } else if (enterMail.indexOf(' ') !== -1) {
-        alert('недійсний email "${enterMail}" (в email не повинні бути прогалини)');
+    if (/[^\w\s]/.test(enterFirstName) === true && enterFirstName.indexOf(' ') === -1 || enterFirstName.indexOf('0') !== -1 || enterFirstName.indexOf('1') !== -1 || enterFirstName.indexOf('2') !== -1 || enterFirstName.indexOf('3') !== -1 || enterFirstName.indexOf('4') !== -1 || enterFirstName.indexOf('5') !== -1 || enterFirstName.indexOf('6') !== -1 || enterFirstName.indexOf('7') !== -1 || enterFirstName.indexOf('8') !== -1 || enterFirstName.indexOf('9') !== -1) {
+        alert('Extra symbol!!!');
+    } else if (enterFirstName == '') {
+        alert('Empty line!');
+    } else if (enterFirstName.indexOf(' ') !== -1 || enterFirstName.indexOf(' ') === -1) {
+        break;
+    } else {
+        alert('Error 404');
     }
-} while (enterMail.indexOf('@') == [0] || enterMail.indexOf('@') == [enterMail.length] - 1 || enterMail.indexOf('@') == -1 || enterMail.indexOf(' ') !== -1);
+} while (true);
 
 do {
-    enterDate = prompt('Введіть дату народження:');
-    enterDate = enterDate.trim();
-} while (enterDate.indexOf(' ') !== -1);
+    enterLastName = prompt('Enter your last name').trim();
+    
+    if (/[^\w\s]/.test(enterLastName) === true && enterLastName.indexOf(' ') === -1 || enterLastName.indexOf('0') !== -1 || enterLastName.indexOf('1') !== -1 || enterLastName.indexOf('2') !== -1 || enterLastName.indexOf('3') !== -1 || enterLastName.indexOf('4') !== -1 || enterLastName.indexOf('5') !== -1 || enterLastName.indexOf('6') !== -1 || enterLastName.indexOf('7') !== -1 || enterLastName.indexOf('8') !== -1 || enterLastName.indexOf('9') !== -1) {
+        alert('Extra symbol!!!'); // не жалуйся, плиз. Хз как ещё на цифры проверить(
+    } else if (enterLastName == '') {
+        alert('Empty line!');
+    } else if (enterLastName.indexOf(' ') !== -1 || enterLastName.indexOf(' ') === -1) {
+        userName = document.createElement('li');
+        userName.classList.add('name');
+        userName.textContent = 'full name: ' + enterFirstName + ' ' + enterLastName;
+        break;
+    } else { // Я специально не вставил в "else" "else if" для вывода полного имени. Если вылезит ошибка или выполнится каким-то немыслимым образом "else", в котором написано "Ошибка", это можно будет в будущем исправить.
+        alert('Error 404');
+    }
+} while (true);
 
-let birthDate  = new Date(enterDate);
-let currentDate  = new Date();
-let age = currentDate.getFullYear() - birthDate.getFullYear();
+do {
+    enterMail = prompt('Enter your email').trim().toLowerCase(); // Тут я хз как чё. Задание очень плохо выражено. Прошу официально не перекидывать меня на вторую перездачу. Просто напиши в телеге и я переделаю. Уверен, такой фигни, как с кавычками, точно не будет xD.
+    
+    userEmail = document.createElement('li');
+    userEmail.classList.add('email');
 
-let username = '<p id="name">Ім`я користувача:' + firstName + lastName + '</p>';
-let mail = '<p id="mail">Email користувача:' + enterMail + '</p>';
-let userAge = '<p id="age">Вік користувача:' + age + '</p>';
+    if (enterMail.indexOf(' ') !== -1) {
+        userEmail.textContent = 'Email: not valid email ' + '"' + enterMail + '"' + ' (There should be no spaces)';
+        break;
+    } else if (enterMail.indexOf('@') == [0]) {
+        userEmail.textContent = 'Email: not valid email ' + '"' + enterMail + '"' + ' (symbol @ find in first place)';
+        break;
+    } else if (enterMail.indexOf('@') == [enterMail.length] - 1) {
+        userEmail.textContent = 'Email: not valid email ' + '"' + enterMail + '"' + ' (symbol @ find in last place)';
+        break;
+    } else if (enterMail.indexOf('@') === -1) {
+        userEmail.textContent = 'Email: not valid email ' + '"' + enterMail + '"' + ' (symbol @ not exist)';
+        break;
+    } else if (enterMail.indexOf(' ') === -1 && enterMail.indexOf('@') !== -1) {
+        userEmail.textContent = 'Email: ' + enterMail;
+        break;
+    } else {
+        alert('Error 404');
+    }
+} while (true);
 
-questionnaireWrap.innerHTML = username + mail + userAge;
+do {
+    enterDate = prompt('Enter your date of birth').trim();
+    
+    if (enterDate >= new Date().getFullYear()) {
+        alert('The year of birth cannot be greater than the current year!!!');
+    } else if (isNaN(enterDate)) {
+        alert('Numbers only!!!');
+    } else if (enterDate.indexOf(' ') !== -1) {
+        alert('There should be no spaces!');
+    } else if (!isNaN(enterDate) && enterDate.indexOf(' ') === -1 && enterDate < new Date().getFullYear()) {
+        enterDate = new Date().getFullYear() - new Date(enterDate).getFullYear();
+        userDate = document.createElement('li');
+        userDate.classList.add('date');
+        userDate.textContent = 'Age: ' + enterDate;
+        break;
+    } else {
+        alert('Error 404');
+    }
+} while (true);
+
+questionnaireList.appendChild(userName);
+questionnaireList.appendChild(userEmail);
+questionnaireList.appendChild(userDate);
+
+
+
+// Всё, что я брал с инета, внизу \\
+
+// /[^\w\s]/.test(a)
